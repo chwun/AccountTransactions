@@ -3,6 +3,7 @@ using System;
 using AccountTransactions.Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AccountTransactions.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231223194433_modelChanges")]
+    partial class modelChanges
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,8 +29,7 @@ namespace AccountTransactions.Api.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<decimal>("Amount")
-                        .HasPrecision(9, 2)
-                        .HasColumnType("decimal(9,2)");
+                        .HasColumnType("decimal(65,30)");
 
                     b.Property<string>("Reference")
                         .IsRequired()
@@ -39,9 +41,6 @@ namespace AccountTransactions.Api.Migrations
 
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("datetime(6)");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

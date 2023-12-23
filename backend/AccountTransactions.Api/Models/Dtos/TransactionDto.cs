@@ -8,5 +8,10 @@ public class TransactionDto
 
     public string Reference { get; set; } = "";
 
+    public TransactionType Type { get; set; }
+
+    public DateTime Timestamp { get; set; }
+
     public decimal Amount { get; set; }
+
 }

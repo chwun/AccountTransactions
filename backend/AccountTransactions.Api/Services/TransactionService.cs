@@ -24,4 +24,29 @@ public class TransactionService : ITransactionService
             return null;
         }
     }
+
+    public async Task<Transaction?> GetByIdAsync(Guid id)
+    {
+        try
+        {
+            return await repository.GetAsync(id);
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    public async Task<Transaction?> AddAsync(Transaction transaction)
+    {
+        try
+        {
+            await repository.AddAsync(transaction);
+            return transaction;
+        }
+        catch
+        {
+            return null;
+        }
+    }
 }

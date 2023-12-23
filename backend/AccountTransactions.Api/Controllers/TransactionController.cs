@@ -1,4 +1,5 @@
 using AccountTransactions.Api.Data.Repositories;
+using AccountTransactions.Api.Models;
 using AccountTransactions.Api.Models.Dtos;
 using AccountTransactions.Api.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -32,5 +33,47 @@ public class TransactionController : ControllerBase
         var dtos = transactions.Select(x => x.ToDto());
 
         return Ok(dtos);
+    }
+
+    [HttpGet("{id:guid}")]
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<TransactionDto>> GetById(Guid id)
+    {
+        var transaction = await transactionService.GetByIdAsync(id);
+        if (transaction is null)
+        {
+            return NotFound();
+        }
+
+        var dto = transaction.ToDto();
+
+        return Ok(dto);
+    }
+
+    [HttpPost]
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult<TransactionDto>> Add([FromBody] TransactionUpdateDto? createDto)
+    {
+        if (createDto is null)
+        {
+            return BadRequest("Transaction object not set");
+        }
+
+        var transaction = Transaction.FromUpdateDto(createDto);
+        transaction = await transactionService.AddAsync(transaction);
+
+        if (transaction is null)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, "Error creating transaction");
+        }
+
+        var dto = transaction.ToDto();
+
+        return CreatedAtAction(nameof(GetById), new { id = dto.Id }, dto);
     }
 }
