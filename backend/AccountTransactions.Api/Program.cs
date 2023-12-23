@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 using AccountTransactions.Api.Data;
 using AccountTransactions.Api.Data.Repositories;
 using AccountTransactions.Api.Helpers;
+using AccountTransactions.Api.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -65,6 +66,8 @@ public class Program
             app.UseCors("DevPolicy");
         }
 
+        app.MapControllers();
+
         app.Run();
     }
 
@@ -74,6 +77,8 @@ public class Program
         ConfigureRepositories(services);
 
         ConfigureHelpers(services);
+
+        services.AddTransient<ITransactionService, TransactionService>();
     }
 
     private static void ConfigureDbContext(IServiceCollection services, IConfiguration configuration)
