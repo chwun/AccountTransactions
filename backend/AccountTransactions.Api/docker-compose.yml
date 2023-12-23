@@ -1,0 +1,32 @@
+name: accounting
+
+volumes:
+  dbdata:
+
+services:
+  db:
+    image: mariadb
+    ports:
+      - "12401:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+      # - "./Migrations/initDb.sql:/docker-entrypoint-initdb.d/initDb.sql"
+    restart: always
+    environment:
+      - MARIADB_ROOT_PASSWORD=admin
+      - MARIADB_USER=apiUser
+      - MARIADB_PASSWORD=pass
+      - MARIADB_DATABASE=accounting
+
+  # api:
+  #   build:
+  #     context: .
+  #     dockerfile: dockerfile
+  #   depends_on:
+  #     - db
+  #   ports:
+  #     - "5000:80"
+  #   restart: always
+  #   environment:
+  #     - ACCOUNTTRANSACTIONS_CONNECTIONSTRINGS__DB=Server=db;Port=12401;User=root;Password=admin;Database=accounting
+  #     - ASPNETCORE_ENVIRONMENT=Development
