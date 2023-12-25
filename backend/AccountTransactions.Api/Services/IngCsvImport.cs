@@ -1,5 +1,5 @@
-using System.Globalization;
 using AccountTransactions.Api.Models;
+using System.Globalization;
 
 namespace AccountTransactions.Api.Services;
 
@@ -9,7 +9,7 @@ public class IngCsvImport : IIngCsvImport
 
 	public async Task<List<Transaction>> ReadTransactionsFromCsvFileAsync(Stream stream)
 	{
-		using var reader = new StreamReader(stream);
+		using StreamReader reader = new StreamReader(stream);
 
 		List<string> lines = [];
 
@@ -33,7 +33,7 @@ public class IngCsvImport : IIngCsvImport
 
 		foreach (string line in lines.SkipWhile(x => !x.StartsWith("Buchung")).Skip(1))
 		{
-			var parts = line.Split(";");
+			string[] parts = line.Split(";");
 
 			decimal amount = decimal.Parse(parts[7], cultureDe.NumberFormat);
 
@@ -51,6 +51,4 @@ public class IngCsvImport : IIngCsvImport
 
 		return transactions;
 	}
-
-
 }

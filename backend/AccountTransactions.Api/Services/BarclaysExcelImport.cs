@@ -1,6 +1,6 @@
-using System.Globalization;
 using AccountTransactions.Api.Models;
 using MiniExcelLibs;
+using System.Globalization;
 
 namespace AccountTransactions.Api.Services;
 
@@ -12,7 +12,7 @@ public class BarclaysExcelImport : IBarclaysExcelImport
 	{
 		List<Transaction> transactions = [];
 
-		foreach (var row in (await stream.QueryAsync()).SkipWhile(x => x.A != "Referenznummer").Skip(1))
+		foreach (dynamic? row in (await stream.QueryAsync()).SkipWhile(x => x.A != "Referenznummer").Skip(1))
 		{
 			decimal amount = decimal.Parse(row.D.TrimEnd('€'), cultureDe.NumberFormat);
 

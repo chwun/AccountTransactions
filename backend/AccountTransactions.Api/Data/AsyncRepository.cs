@@ -21,28 +21,19 @@ public abstract class AsyncRepository<TModel> : IAsyncRepository<TModel> where T
 	/// </summary>
 	/// <param name="id">id</param>
 	/// <returns>object with given id (if found)</returns>
-	public virtual async Task<TModel?> GetAsync(Guid id)
-	{
-		return await DatabaseContext.Set<TModel>().FindAsync(id);
-	}
+	public virtual async Task<TModel?> GetAsync(Guid id) => await DatabaseContext.Set<TModel>().FindAsync(id);
 
 	/// <summary>
 	/// Gets all objects
 	/// </summary>
 	/// <returns>list of objects</returns>
-	public async Task<IEnumerable<TModel>> GetAllAsync()
-	{
-		return await DatabaseContext.Set<TModel>().ToListAsync();
-	}
+	public async Task<IEnumerable<TModel>> GetAllAsync() => await DatabaseContext.Set<TModel>().ToListAsync();
 
 	/// <summary>
 	/// Gets all objects without change tracking
 	/// </summary>
 	/// <returns>list of objects without change tracking</returns>
-	public virtual async Task<IEnumerable<TModel>> GetAllAsNoTrackingAsync()
-	{
-		return await DatabaseContext.Set<TModel>().AsNoTracking().ToListAsync();
-	}
+	public virtual async Task<IEnumerable<TModel>> GetAllAsNoTrackingAsync() => await DatabaseContext.Set<TModel>().AsNoTracking().ToListAsync();
 
 	/// <summary>
 	/// Adds the given object

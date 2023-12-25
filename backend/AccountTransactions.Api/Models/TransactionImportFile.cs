@@ -12,16 +12,13 @@ public class TransactionImportFile
 
 	public DateTime Timestamp { get; set; }
 
-	public List<Transaction> Transactions { get; } = new List<Transaction>();
+	public List<Transaction> Transactions { get; } = new();
 
-	public TransactionImportFileDto ToDto()
+	public TransactionImportFileDto ToDto() => new()
 	{
-		return new()
-		{
-			Id = Id,
-			Filename = Filename,
-			FileType = FileType,
-			Timestamp = Timestamp
-		};
-	}
+		Id = Id,
+		Filename = Filename,
+		FileType = FileType,
+		Timestamp = Timestamp
+	};
 }

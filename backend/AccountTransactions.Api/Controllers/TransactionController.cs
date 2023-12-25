@@ -10,8 +10,8 @@ namespace AccountTransactions.Api.Controllers;
 [Route("api/transactions")]
 public class TransactionController : ControllerBase
 {
-	private readonly ITransactionAccess transactionAccess;
 	private readonly ITransactionFileImport fileImport;
+	private readonly ITransactionAccess transactionAccess;
 
 	public TransactionController(ITransactionAccess transactionAccess, ITransactionFileImport fileImport)
 	{
@@ -42,13 +42,13 @@ public class TransactionController : ControllerBase
 	[ProducesResponseType(StatusCodes.Status404NotFound)]
 	public async Task<ActionResult<TransactionDto>> GetById(Guid id)
 	{
-		var transaction = await transactionAccess.GetByIdAsync(id);
+		Transaction? transaction = await transactionAccess.GetByIdAsync(id);
 		if (transaction is null)
 		{
 			return NotFound();
 		}
 
-		var dto = transaction.ToDto();
+		TransactionDto dto = transaction.ToDto();
 
 		return Ok(dto);
 	}
@@ -65,7 +65,7 @@ public class TransactionController : ControllerBase
 			return BadRequest("Transaction object not set");
 		}
 
-		var transaction = Transaction.FromUpdateDto(createDto);
+		Transaction? transaction = Transaction.FromUpdateDto(createDto);
 		transaction = await transactionAccess.AddAsync(transaction);
 
 		if (transaction is null)
@@ -73,9 +73,9 @@ public class TransactionController : ControllerBase
 			return StatusCode(StatusCodes.Status500InternalServerError, "Error creating transaction");
 		}
 
-		var dto = transaction.ToDto();
+		TransactionDto dto = transaction.ToDto();
 
-		return CreatedAtAction(nameof(GetById), new { id = dto.Id }, dto);
+		return CreatedAtAction(nameof(GetById), new {id = dto.Id}, dto);
 	}
 
 	[HttpPost("import")]
@@ -89,14 +89,14 @@ public class TransactionController : ControllerBase
 			return BadRequest("Import data not set");
 		}
 
-		var importedFile = await fileImport.ImportFile(importData);
+		TransactionImportFile? importedFile = await fileImport.ImportFile(importData);
 
 		if (importedFile is null)
 		{
 			return StatusCode(StatusCodes.Status500InternalServerError, "Error importing file");
 		}
 
-		var dto = importedFile.ToDto();
+		TransactionImportFileDto dto = importedFile.ToDto();
 
 		return Ok(dto);
 	}

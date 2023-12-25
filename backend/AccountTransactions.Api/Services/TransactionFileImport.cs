@@ -7,12 +7,13 @@ namespace AccountTransactions.Api.Services;
 
 public class TransactionFileImport : ITransactionFileImport
 {
-	private readonly IDateTimeProvider dateTimeProvider;
-	private readonly ITransactionImportFileAccess importFileAccess;
 	private readonly IIngCsvImport csvImport;
+	private readonly IDateTimeProvider dateTimeProvider;
 	private readonly IBarclaysExcelImport excelImport;
+	private readonly ITransactionImportFileAccess importFileAccess;
 
-	public TransactionFileImport(ITransactionImportFileAccess importFileAccess, IIngCsvImport csvImport, IBarclaysExcelImport excelImport, IDateTimeProvider dateTimeProvider)
+	public TransactionFileImport(ITransactionImportFileAccess importFileAccess, IIngCsvImport csvImport, IBarclaysExcelImport excelImport,
+		IDateTimeProvider dateTimeProvider)
 	{
 		this.importFileAccess = importFileAccess;
 		this.csvImport = csvImport;

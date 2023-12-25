@@ -2,7 +2,7 @@ namespace AccountTransactions.Api.Models;
 
 public enum TransactionType
 {
-    Revenue,
+	Revenue,
 
-    Expense
+	Expense
 }

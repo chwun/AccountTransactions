@@ -4,5 +4,5 @@ namespace AccountTransactions.Api.Services.DataAccess;
 
 public interface ITransactionImportFileAccess
 {
-    Task<TransactionImportFile?> AddAsync(TransactionImportFile importFile);
+	Task<TransactionImportFile?> AddAsync(TransactionImportFile importFile);
 }

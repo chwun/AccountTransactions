@@ -5,12 +5,14 @@ namespace AccountTransactions.Api.Helpers;
 /// <summary>
 /// Attribute for validating that an guid is not empty
 /// </summary>
-[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
+[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter)]
 public class GuidNotEmptyAttribute : ValidationAttribute
 {
 	public const string DefaultErrorMessage = "The {0} field must not be an empty guid";
 
-	public GuidNotEmptyAttribute() : base(DefaultErrorMessage) { }
+	public GuidNotEmptyAttribute() : base(DefaultErrorMessage)
+	{
+	}
 
 	public override bool IsValid(object? value)
 	{
@@ -23,6 +25,7 @@ public class GuidNotEmptyAttribute : ValidationAttribute
 		{
 			case Guid guid:
 				return guid != Guid.Empty;
+
 			default:
 				return true;
 		}
