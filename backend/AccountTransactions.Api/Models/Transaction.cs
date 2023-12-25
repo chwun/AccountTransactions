@@ -19,6 +19,10 @@ public class Transaction
     [Precision(9, 2)]
     public decimal Amount { get; set; }
 
+    public TransactionImportFile? ImportFile { get; set; }
+
+    public Guid ImportFileId { get; set; }
+
     public TransactionDto ToDto()
     {
         return new()

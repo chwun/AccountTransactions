@@ -2,13 +2,13 @@
 using AccountTransactions.Api.Data.Repositories;
 using AccountTransactions.Api.Models;
 
-namespace AccountTransactions.Api.Services;
+namespace AccountTransactions.Api.Services.DataAccess;
 
-public class TransactionService : ITransactionService
+public class TransactionAccess : ITransactionAccess
 {
     private readonly ITransactionRepository repository;
 
-    public TransactionService(ITransactionRepository repository)
+    public TransactionAccess(ITransactionRepository repository)
     {
         this.repository = repository;
     }

@@ -3,6 +3,7 @@ using System;
 using AccountTransactions.Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AccountTransactions.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231225155336_addImportFiles")]
+    partial class addImportFiles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,7 +53,7 @@ namespace AccountTransactions.Api.Migrations
 
                     b.HasIndex("ImportFileId");
 
-                    b.ToTable("Transactions", (string)null);
+                    b.ToTable("Transactions");
                 });
 
             modelBuilder.Entity("AccountTransactions.Api.Models.TransactionImportFile", b =>
@@ -71,7 +74,7 @@ namespace AccountTransactions.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ImportFiles", (string)null);
+                    b.ToTable("ImportFiles");
                 });
 
             modelBuilder.Entity("AccountTransactions.Api.Models.Transaction", b =>

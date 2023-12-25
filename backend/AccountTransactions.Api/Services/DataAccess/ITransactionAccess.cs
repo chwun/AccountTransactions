@@ -1,8 +1,8 @@
 using AccountTransactions.Api.Models;
 
-namespace AccountTransactions.Api.Services;
+namespace AccountTransactions.Api.Services.DataAccess;
 
-public interface ITransactionService
+public interface ITransactionAccess
 {
     Task<IEnumerable<Transaction>?> GetAllAsync();
 
