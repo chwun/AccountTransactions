@@ -21,4 +21,9 @@ public class AppDbContext : DbContext
 	/// Set of import files
 	/// </summary>
 	public DbSet<TransactionImportFile> ImportFiles { get; set; } = null!;
+
+	/// <summary>
+	/// Set of categories
+	/// </summary>
+	public DbSet<Category> Categories { get; set; } = null!;
 }

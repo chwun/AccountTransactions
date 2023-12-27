@@ -9,7 +9,7 @@ public class IngCsvImport : IIngCsvImport
 
 	public async Task<List<Transaction>> ReadTransactionsFromCsvFileAsync(Stream stream)
 	{
-		using StreamReader reader = new StreamReader(stream);
+		using StreamReader reader = new(stream);
 
 		List<string> lines = [];
 

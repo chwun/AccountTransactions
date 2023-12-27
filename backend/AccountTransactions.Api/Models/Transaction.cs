@@ -22,6 +22,10 @@ public class Transaction
 
 	public Guid ImportFileId { get; set; }
 
+	public Category? Category { get; set; }
+
+	public Guid CategoryGuid { get; set; }
+
 	public TransactionDto ToDto() => new()
 	{
 		Id = Id,

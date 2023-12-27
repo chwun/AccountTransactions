@@ -77,6 +77,7 @@ public class Program
 
 		services.AddTransient<ITransactionAccess, TransactionAccess>();
 		services.AddTransient<ITransactionImportFileAccess, TransactionImportFileAccess>();
+		services.AddTransient<ICategoryAccess, CategoryAccess>();
 
 		services.AddTransient<ITransactionFileImport, TransactionFileImport>();
 		services.AddTransient<IIngCsvImport, IngCsvImport>();
@@ -97,6 +98,7 @@ public class Program
 	{
 		services.AddScoped<ITransactionRepository, TransactionRepository>();
 		services.AddScoped<ITransactionImportFileRepository, TransactionImportFileRepository>();
+		services.AddScoped<ICategoryRepository, CategoryRepository>();
 	}
 
 	private static void ConfigureHelpers(IServiceCollection services)
