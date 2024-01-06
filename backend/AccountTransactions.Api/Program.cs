@@ -1,6 +1,7 @@
 using AccountTransactions.Api.Data;
 using AccountTransactions.Api.Data.Repositories;
 using AccountTransactions.Api.Helpers;
+using AccountTransactions.Api.Models.Updater;
 using AccountTransactions.Api.Services;
 using AccountTransactions.Api.Services.DataAccess;
 using Microsoft.EntityFrameworkCore;
@@ -18,8 +19,6 @@ public class Program
 		builder.Configuration.AddEnvironmentVariables("ACCOUNTTRANSACTIONS_");
 
 		ConfigureServices(builder.Services, builder.Configuration);
-
-		// builder.Services.AddAutoMapper(typeof(Program));
 
 		builder.Services.AddControllers().AddJsonOptions(options => { options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()); });
 
@@ -82,6 +81,9 @@ public class Program
 		services.AddTransient<ITransactionFileImport, TransactionFileImport>();
 		services.AddTransient<IIngCsvImport, IngCsvImport>();
 		services.AddTransient<IBarclaysExcelImport, BarclaysExcelImport>();
+
+		services.AddTransient<ICategoryUpdater, CategoryUpdater>();
+		services.AddTransient<ICategoryConditionUpdater, CategoryConditionUpdater>();
 	}
 
 	private static void ConfigureDbContext(IServiceCollection services, IConfiguration configuration)

@@ -1,3 +1,5 @@
+using AccountTransactions.Api.Models.Dtos;
+
 namespace AccountTransactions.Api.Models;
 
 public class CategoryCondition
@@ -10,5 +12,12 @@ public class CategoryCondition
 
 	public Category Category { get; set; } = null!;
 
-	public Guid CategoryGuid { get; set; }
+	public Guid CategoryId { get; set; }
+
+	public CategoryConditionDto ToDto() => new()
+	{
+		Id = Id,
+		Type = Type,
+		Text = Text
+	};
 }

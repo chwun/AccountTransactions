@@ -77,7 +77,7 @@ public class TransactionController : ControllerBase
 
 		TransactionDto dto = transaction.ToDto();
 
-		return CreatedAtAction(nameof(GetById), new { id = dto.Id }, dto);
+		return CreatedAtAction(nameof(GetById), new {id = dto.Id}, dto);
 	}
 
 	[HttpPost("import")]

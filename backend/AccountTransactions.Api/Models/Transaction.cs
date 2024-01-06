@@ -40,7 +40,7 @@ public class Transaction
 	{
 		SourceOrDestination = dto.SourceOrDestination,
 		Reference = dto.Reference,
-		Type = dto.Type ?? throw new InvalidDataException(),
+		Type = dto.Type,
 		Timestamp = dto.Timestamp ?? throw new InvalidDataException(),
 		Amount = dto.Amount ?? throw new InvalidDataException()
 	};
