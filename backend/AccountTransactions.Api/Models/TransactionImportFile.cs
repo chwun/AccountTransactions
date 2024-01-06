@@ -12,7 +12,7 @@ public class TransactionImportFile
 
 	public DateTime Timestamp { get; set; }
 
-	public List<Transaction> Transactions { get; } = new();
+	public List<Transaction> Transactions { get; } = [];
 
 	public TransactionImportFileDto ToDto() => new()
 	{

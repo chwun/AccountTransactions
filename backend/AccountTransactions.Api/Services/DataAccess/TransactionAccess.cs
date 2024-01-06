@@ -24,6 +24,18 @@ public class TransactionAccess : ITransactionAccess
 		}
 	}
 
+	public async Task<IEnumerable<Transaction>?> GetAllByImportFileAsync(Guid importFileId)
+	{
+		try
+		{
+			return await repository.GetAllByImportFileAsNoTrackingAsync(importFileId);
+		}
+		catch
+		{
+			return null;
+		}
+	}
+
 	public async Task<Transaction?> GetByIdAsync(Guid id)
 	{
 		try

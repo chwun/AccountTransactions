@@ -23,12 +23,14 @@ public class TransactionController : ControllerBase
 	[Produces("application/json")]
 	[ProducesResponseType(StatusCodes.Status200OK)]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-	public async Task<ActionResult<IEnumerable<TransactionDto>>> GetAll()
+	public async Task<ActionResult<IEnumerable<TransactionDto>>> GetAll([FromQuery] Guid? importFileId)
 	{
-		var transactions = await transactionAccess.GetAllAsync();
+		var transactions = importFileId == null
+			? await transactionAccess.GetAllAsync()
+			: await transactionAccess.GetAllByImportFileAsync(importFileId.Value);
 		if (transactions is null)
 		{
-			return StatusCode(StatusCodes.Status500InternalServerError, "Error reading all transactions");
+			return StatusCode(StatusCodes.Status500InternalServerError, "Error reading transactions");
 		}
 
 		var dtos = transactions.Select(x => x.ToDto());
@@ -75,7 +77,7 @@ public class TransactionController : ControllerBase
 
 		TransactionDto dto = transaction.ToDto();
 
-		return CreatedAtAction(nameof(GetById), new {id = dto.Id}, dto);
+		return CreatedAtAction(nameof(GetById), new { id = dto.Id }, dto);
 	}
 
 	[HttpPost("import")]

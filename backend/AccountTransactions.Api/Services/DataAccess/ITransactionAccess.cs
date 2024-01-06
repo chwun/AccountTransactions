@@ -6,6 +6,8 @@ public interface ITransactionAccess
 {
 	Task<IEnumerable<Transaction>?> GetAllAsync();
 
+	Task<IEnumerable<Transaction>?> GetAllByImportFileAsync(Guid importFileId);
+
 	Task<Transaction?> GetByIdAsync(Guid id);
 
 	Task<Transaction?> AddAsync(Transaction transaction);
