@@ -84,7 +84,7 @@ public class TransactionController : ControllerBase
 	[ProducesResponseType(StatusCodes.Status200OK)]
 	[ProducesResponseType(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-	public async Task<ActionResult<TransactionImportFileDto>> Add([FromForm] TransactionFileUploadDto? importData)
+	public async Task<ActionResult<TransactionImportFileDto>> ImportFile([FromForm] TransactionFileUploadDto? importData)
 	{
 		if (importData is null)
 		{
