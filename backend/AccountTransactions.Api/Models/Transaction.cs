@@ -20,11 +20,11 @@ public class Transaction
 
 	public TransactionImportFile? ImportFile { get; set; }
 
-	public Guid ImportFileId { get; set; }
+	public Guid? ImportFileId { get; set; }
 
 	public Category? Category { get; set; }
 
-	public Guid CategoryGuid { get; set; }
+	public Guid CategoryId { get; set; }
 
 	public TransactionDto ToDto() => new()
 	{
@@ -33,6 +33,7 @@ public class Transaction
 		Reference = Reference,
 		Type = Type,
 		Timestamp = Timestamp,
-		Amount = Amount
+		Amount = Amount,
+		CategoryId = CategoryId
 	};
 }

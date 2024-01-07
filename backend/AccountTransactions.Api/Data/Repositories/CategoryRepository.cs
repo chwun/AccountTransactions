@@ -13,4 +13,9 @@ public class CategoryRepository : AsyncRepository<Category>, ICategoryRepository
 	{
 		return await DatabaseContext.Set<Category>().Include(c => c.Conditions).FirstOrDefaultAsync(x => x.Id.Equals(id));
 	}
+
+	public async Task<IEnumerable<Category>?> GetAllWithConditionsAsync()
+	{
+		return await DatabaseContext.Set<Category>().Include(c => c.Conditions).ToListAsync();
+	}
 }

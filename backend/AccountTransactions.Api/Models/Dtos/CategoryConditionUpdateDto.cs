@@ -5,6 +5,7 @@ namespace AccountTransactions.Api.Models.Dtos;
 
 public class CategoryConditionUpdateDto
 {
+	[Required]
 	[EnumValueDefined(typeof(CategoryConditionType))]
 	public CategoryConditionType? Type { get; set; }
 

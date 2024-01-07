@@ -9,6 +9,7 @@ public class CategoryUpdateDto
 	[MinLength(1)]
 	public string Name { get; set; } = "";
 
+	[Required]
 	[EnumValueDefined(typeof(TransactionType))]
 	public TransactionType TransactionType { get; set; }
 

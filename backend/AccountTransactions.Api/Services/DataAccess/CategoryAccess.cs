@@ -24,6 +24,18 @@ public class CategoryAccess : ICategoryAccess
 		}
 	}
 
+	public async Task<IEnumerable<Category>?> GetAllWithConditionsAsync()
+	{
+		try
+		{
+			return await repository.GetAllWithConditionsAsync();
+		}
+		catch
+		{
+			return null;
+		}
+	}
+
 	public async Task<Category?> GetByIdAsync(Guid id)
 	{
 		try

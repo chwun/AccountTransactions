@@ -11,6 +11,7 @@ public class TransactionRepository : AsyncRepository<Transaction>, ITransactionR
 
 	public async Task<IEnumerable<Transaction>> GetAllByImportFileAsNoTrackingAsync(Guid importFileId)
 	{
-		return await DatabaseContext.Set<Transaction>().Include(t => t.ImportFile).Where(t => t.ImportFileId.Equals(importFileId)).ToListAsync();
+		return await DatabaseContext.Set<Transaction>().Include(t => t.ImportFile).Include(t => t.Category)
+			.Where(t => t.ImportFileId.Equals(importFileId)).ToListAsync();
 	}
 }

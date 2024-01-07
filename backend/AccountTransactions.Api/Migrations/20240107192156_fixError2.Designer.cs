@@ -3,6 +3,7 @@ using System;
 using AccountTransactions.Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AccountTransactions.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240107192156_fixError2")]
+    partial class fixError2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,7 +73,10 @@ namespace AccountTransactions.Api.Migrations
                         .HasPrecision(9, 2)
                         .HasColumnType("decimal(9,2)");
 
-                    b.Property<Guid>("CategoryId")
+                    b.Property<Guid>("CategoryGuid")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid?>("CategoryId")
                         .HasColumnType("char(36)");
 
                     b.Property<Guid?>("ImportFileId")
@@ -135,9 +141,7 @@ namespace AccountTransactions.Api.Migrations
                 {
                     b.HasOne("AccountTransactions.Api.Models.Category", "Category")
                         .WithMany("Transactions")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CategoryId");
 
                     b.HasOne("AccountTransactions.Api.Models.TransactionImportFile", "ImportFile")
                         .WithMany("Transactions")

@@ -13,8 +13,9 @@ public class TransactionUpdateDto
 	[MinLength(1)]
 	public string Reference { get; set; } = "";
 
+	[Required]
 	[EnumValueDefined(typeof(TransactionType))]
-	public TransactionType Type { get; set; }
+	public TransactionType? Type { get; set; }
 
 	[Required]
 	public DateTime? Timestamp { get; set; }

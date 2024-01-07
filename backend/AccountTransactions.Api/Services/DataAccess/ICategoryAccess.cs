@@ -6,6 +6,8 @@ public interface ICategoryAccess
 {
 	Task<IEnumerable<Category>?> GetAllAsync();
 
+	Task<IEnumerable<Category>?> GetAllWithConditionsAsync();
+
 	Task<Category?> GetByIdAsync(Guid id);
 
 	Task<Category?> AddAsync(Category category);
