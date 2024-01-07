@@ -60,4 +60,30 @@ public class TransactionAccess : ITransactionAccess
 			return null;
 		}
 	}
+
+	public async Task<bool> UpdateAsync(Transaction transaction)
+	{
+		try
+		{
+			await repository.UpdateAsync(transaction);
+			return true;
+		}
+		catch
+		{
+			return false;
+		}
+	}
+
+	public async Task<bool> DeleteAsync(Transaction transaction)
+	{
+		try
+		{
+			await repository.RemoveAsync(transaction);
+			return true;
+		}
+		catch
+		{
+			return false;
+		}
+	}
 }

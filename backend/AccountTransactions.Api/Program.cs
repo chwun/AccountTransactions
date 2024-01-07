@@ -82,6 +82,7 @@ public class Program
 		services.AddTransient<IIngCsvImport, IngCsvImport>();
 		services.AddTransient<IBarclaysExcelImport, BarclaysExcelImport>();
 
+		services.AddTransient<ITransactionUpdater, TransactionUpdater>();
 		services.AddTransient<ICategoryUpdater, CategoryUpdater>();
 		services.AddTransient<ICategoryConditionUpdater, CategoryConditionUpdater>();
 	}

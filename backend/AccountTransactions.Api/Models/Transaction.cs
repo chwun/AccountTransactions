@@ -35,13 +35,4 @@ public class Transaction
 		Timestamp = Timestamp,
 		Amount = Amount
 	};
-
-	public static Transaction FromUpdateDto(TransactionUpdateDto dto) => new()
-	{
-		SourceOrDestination = dto.SourceOrDestination,
-		Reference = dto.Reference,
-		Type = dto.Type,
-		Timestamp = dto.Timestamp ?? throw new InvalidDataException(),
-		Amount = dto.Amount ?? throw new InvalidDataException()
-	};
 }

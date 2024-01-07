@@ -1,5 +1,6 @@
 using AccountTransactions.Api.Models;
 using AccountTransactions.Api.Models.Dtos;
+using AccountTransactions.Api.Models.Updater;
 using AccountTransactions.Api.Services;
 using AccountTransactions.Api.Services.DataAccess;
 using Microsoft.AspNetCore.Mvc;
@@ -12,11 +13,13 @@ public class TransactionController : ControllerBase
 {
 	private readonly ITransactionFileImport fileImport;
 	private readonly ITransactionAccess transactionAccess;
+	private readonly ITransactionUpdater transactionUpdater;
 
-	public TransactionController(ITransactionAccess transactionAccess, ITransactionFileImport fileImport)
+	public TransactionController(ITransactionAccess transactionAccess, ITransactionFileImport fileImport, ITransactionUpdater transactionUpdater)
 	{
 		this.fileImport = fileImport;
 		this.transactionAccess = transactionAccess;
+		this.transactionUpdater = transactionUpdater;
 	}
 
 	[HttpGet]
@@ -67,7 +70,9 @@ public class TransactionController : ControllerBase
 			return BadRequest("Transaction object not set");
 		}
 
-		Transaction? transaction = Transaction.FromUpdateDto(createDto);
+		Transaction? transaction = new();
+		transactionUpdater.UpdateFromDto(transaction, createDto);
+
 		transaction = await transactionAccess.AddAsync(transaction);
 
 		if (transaction is null)
@@ -78,6 +83,56 @@ public class TransactionController : ControllerBase
 		TransactionDto dto = transaction.ToDto();
 
 		return CreatedAtAction(nameof(GetById), new {id = dto.Id}, dto);
+	}
+
+	[HttpPut("{id:guid}")]
+	[Produces("application/json")]
+	[ProducesResponseType(StatusCodes.Status200OK)]
+	[ProducesResponseType(StatusCodes.Status400BadRequest)]
+	[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+	public async Task<IActionResult> Update(Guid id, [FromBody] TransactionUpdateDto? updateDto)
+	{
+		if (updateDto is null)
+		{
+			return BadRequest("Transaction object not set");
+		}
+
+		Transaction? transaction = await transactionAccess.GetByIdAsync(id);
+		if (transaction is null)
+		{
+			return NotFound("Transaction not found");
+		}
+
+		transactionUpdater.UpdateFromDto(transaction, updateDto);
+
+		bool success = await transactionAccess.UpdateAsync(transaction);
+		if (!success)
+		{
+			return StatusCode(StatusCodes.Status500InternalServerError, "Error updating transaction");
+		}
+
+		return Ok();
+	}
+
+	[HttpDelete("{id:guid}")]
+	[ProducesResponseType(StatusCodes.Status200OK)]
+	[ProducesResponseType(StatusCodes.Status404NotFound)]
+	[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+	public async Task<IActionResult> Delete(Guid id)
+	{
+		Transaction? transaction = await transactionAccess.GetByIdAsync(id);
+		if (transaction is null)
+		{
+			return NotFound("Transaction not found");
+		}
+
+		bool success = await transactionAccess.DeleteAsync(transaction);
+		if (!success)
+		{
+			return StatusCode(StatusCodes.Status500InternalServerError, "Error deleting transaction");
+		}
+
+		return Ok();
 	}
 
 	[HttpPost("import")]
